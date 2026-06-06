@@ -1,0 +1,409 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap');
+
+:root {
+  --bg: #F5F1EB;
+  --text: #111111;
+  --sec: #8B8A84;
+  --accent: #D8D1C7;
+  --white: #FFFFFF;
+  --black: #0A0A0A;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CURSOR ── */
+.cursor-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--text);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--text);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+/* ── LOADER ── */
+.loader {
+  position: fixed;
+  inset: 0;
+  background: var(--black);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+  transition: opacity 0.8s ease;
+}
+
+.loader.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader-text-wrap {
+  overflow: hidden;
+}
+
+.loader-text {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: var(--bg);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  animation: loaderReveal 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+.loader-line {
+  width: 1px;
+  height: 0;
+  background: var(--accent);
+  animation: loaderLine 1.5s ease forwards 0.5s;
+}
+
+@keyframes loaderReveal {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+@keyframes loaderLine {
+  from { height: 0; }
+  to   { height: 80px; }
+}
+
+/* ── NAVBAR ── */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1.5rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.4s ease, padding 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.navbar.scrolled {
+  background: rgba(245, 241, 235, 0.92);
+  backdrop-filter: blur(12px);
+  padding: 1rem 3rem;
+  border-bottom-color: var(--accent);
+}
+
+/* ── TICKER ── */
+.ticker-wrap {
+  overflow: hidden;
+  padding: 0.9rem 0;
+  background: var(--black);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.ticker-inner {
+  display: flex;
+  white-space: nowrap;
+  animation: ticker 22s linear infinite;
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── SCROLL LINE ── */
+.scroll-line {
+  width: 1px;
+  height: 60px;
+  background: rgba(245, 241, 235, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(245, 241, 235, 0.8);
+  animation: scrollAnim 2s ease infinite 3.5s;
+}
+
+@keyframes scrollAnim {
+  from { top: -100%; }
+  to   { top: 100%; }
+}
+
+/* ── HERO ── */
+.hero-bg-img {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1800&q=80');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.45;
+  animation: heroZoom 12s ease-out forwards;
+}
+
+@keyframes heroZoom {
+  from { transform: scale(1.08); }
+  to   { transform: scale(1.0); }
+}
+
+/* ── PROJECT ITEMS ── */
+.project-img-inner {
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.project-item:hover .project-img-inner {
+  transform: scale(1.04);
+}
+
+/* ── SERVICE CARDS ── */
+.service-card {
+  position: relative;
+  overflow: hidden;
+  padding: 3rem 2.5rem;
+  border-right: 1px solid var(--accent);
+  cursor: none;
+  transition: color 0.4s ease;
+}
+
+.service-card:last-child {
+  border-right: none;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--text);
+  transform: translateY(100%);
+  transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.service-card:hover::before {
+  transform: translateY(0);
+}
+
+.service-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.service-card:hover .service-text {
+  color: var(--bg);
+}
+
+/* ── PROCESS LINE ── */
+.process-line-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  background: var(--text);
+  transition: width 1.5s ease;
+}
+
+.process-line-fill.animated {
+  width: 100%;
+}
+
+/* ── ABOUT IMG ── */
+.about-img-inner {
+  transition: transform 0.8s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-img-wrap:hover .about-img-inner {
+  transform: scale(1.03);
+}
+
+/* ── JOURNAL CARDS ── */
+.journal-img-inner {
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.journal-card:hover .journal-img-inner {
+  transform: scale(1.05);
+}
+
+/* ── TESTIMONIAL ── */
+.testimonial-quote {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  font-weight: 300;
+  line-height: 1.4;
+  font-style: italic;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.7s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.testimonial-quote.active {
+  opacity: 1;
+  transform: translateY(0);
+  position: relative;
+}
+
+/* ── MOBILE MENU ── */
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--black);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem;
+  transform: translateX(100%);
+  transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.mobile-overlay.open {
+  transform: translateX(0);
+}
+
+/* ── BUTTONS ── */
+.btn-primary {
+  background: var(--bg);
+  color: var(--text);
+  padding: 0.9rem 2.2rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  border: 1px solid var(--bg);
+  cursor: none;
+}
+
+.btn-primary:hover {
+  background: transparent;
+  color: var(--bg);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--bg);
+  padding: 0.9rem 2.2rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(245, 241, 235, 0.4);
+  cursor: none;
+}
+
+.btn-ghost:hover {
+  border-color: var(--bg);
+}
+
+.btn-outline {
+  border: 1px solid var(--text);
+  color: var(--text);
+  padding: 0.85rem 2rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+  cursor: none;
+}
+
+.btn-outline:hover {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* ── SECTION EYEBROW ── */
+.section-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--sec);
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.section-eyebrow::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+/* ── CONTACT ── */
+.contact-email-link {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  font-weight: 300;
+  color: rgba(245, 241, 235, 0.5);
+  text-decoration: none;
+  transition: color 0.4s ease;
+}
+
+.contact-email-link:hover {
+  color: var(--bg);
+}
